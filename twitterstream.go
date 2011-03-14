@@ -14,10 +14,10 @@ import (
 )
 
 
-var followUrl, _ = http.ParseURL("https://stream.twitter.com/1/statuses/filter.json")
-var trackUrl, _ = http.ParseURL("http://stream.twitter.com/1/statuses/filter.json")
-var sampleUrl, _ = http.ParseURL("http://stream.twitter.com/1/statuses/sample.json")
-var userUrl, _ = http.ParseURL("http://userstream.twitter.com/2/user.json")
+var followUrl, _ =     http.ParseURL("https://stream.twitter.com/1/statuses/filter.json")
+var trackUrl, _ =      http.ParseURL("https://stream.twitter.com/1/statuses/filter.json")
+var sampleUrl, _ =     http.ParseURL("https://stream.twitter.com/1/statuses/sample.json")
+var userUrl, _ =       http.ParseURL("https://userstream.twitter.com/2/user.json")
 var siteStreamUrl, _ = http.ParseURL("https://betastream.twitter.com/2b/site.json")
 
 var retryTimeout int64 = 5e9
@@ -58,14 +58,14 @@ func (conn *streamConn) connect() (*http.Response, os.Error) {
     var req http.Request
     req.URL = conn.url
     req.Method = "GET"
-    req.Header = map[string]string{}
-    req.Header["Authorization"] = "Basic " + conn.authData
+    req.Header = make(http.Header)
+    req.Header.Set("Authorization", "Basic " + conn.authData)
 
     if conn.postData != "" {
         req.Method = "POST"
         req.Body = nopCloser{bytes.NewBufferString(conn.postData)}
         req.ContentLength = int64(len(conn.postData))
-        req.Header["Content-Type"] = "application/x-www-form-urlencoded"
+        req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
     }
 
     err = conn.clientConn.Write(&req)
@@ -73,7 +73,7 @@ func (conn *streamConn) connect() (*http.Response, os.Error) {
         return nil, err
     }
 
-    resp, err := conn.clientConn.Read()
+    resp, err := conn.clientConn.Do(&req)
     if err != nil {
         return nil, err
     }
