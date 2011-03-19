@@ -1,5 +1,31 @@
 package twitterstream
 
+type Hashtags struct {
+    Indices                     []int
+    Text                        string
+}
+
+type Urls struct {
+    Url                         string
+    Indices                     []int
+    Display_url                 string
+    Expanded_url                string
+}
+
+type User_mentions struct {
+    Indices                     []int
+    Screen_name                 string
+    Id_str                      string
+    Name                        string
+    Id                          int64
+}
+ 
+type Entities struct {
+    Hashtags                    []Hashtags
+    Urls                        []Urls
+    User_mentions               []User_mentions
+}
+
 type User struct {
     Lang                         string
     Verified                     bool
@@ -27,37 +53,39 @@ type User struct {
     Created_at                   string
     Profile_image_url            string
     Id                           int64
+    Id_str                       string
     Utc_offset                   int
     Profile_sidebar_border_color string
 }
 
 type Tweet struct {
-    Text                    string
-    Truncated               bool
-    Geo                     string
-    In_reply_to_screen_name string
-    Favorited               bool
-    Source                  string
-    Contributors            string
-    In_reply_to_status_id   string
-    In_reply_to_user_id     int64
-    Id                      int64
-    Created_at              string
-    User                    *User
+    Text                        string
+    Truncated                   bool
+    Geo                         string
+    In_reply_to_screen_name     string
+    Favorited                   bool
+    Source                      string
+    Contributors                string
+    In_reply_to_status_id       string
+    In_reply_to_user_id         int64
+    Id                          int64
+    Created_at                  string
+    Entities                    Entities
+    User                        User
 }
 
 type SiteStreamMessage struct {
-    For_user int64
-    Message  Tweet
+    For_user                    int64
+    Message                     Tweet
 }
 
 type Event struct {
-    Target     User
-    Source     User
-    Created_at string
-    Event      string
+    Target                      User
+    Source                      User
+    Created_at                  string
+    Event                       string
 }
 
 type FriendList struct {
-    Friends []int64
+    Friends                     []int64
 }
