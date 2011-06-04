@@ -42,9 +42,9 @@ type Sizes struct {
 }
 
 type Dimensions struct {
-    w                           int64
+    w                           int
     resize                      string
-    h                           int64
+    h                           int
 }
 
  type Entities struct {
