@@ -19,11 +19,39 @@ type User_mentions struct {
     Name                        string
     Id                          int64
 }
- 
-type Entities struct {
+
+type Media struct {
+    Id                          int64
+    Id_str                      string
+    Media_url                   string
+    Media_url_https             string
+    Url                         string
+    Display_url                 string
+    Expanded_url                string
+    Type                        string
+    Indices                     []int
+    Screen_name                 string
+    Sizes                       []Sizes
+}
+
+type Sizes struct {
+    large                       Dimensions
+    medium                      Dimensions
+    small                       Dimensions
+    thumb                       Dimensions
+}
+
+type Dimensions struct {
+    w                           int64
+    resize                      string
+    h                           int64
+}
+
+ type Entities struct {
     Hashtags                    []Hashtags
     Urls                        []Urls
     User_mentions               []User_mentions
+    Media                       []Media
 }
 
 type User struct {
@@ -58,7 +86,6 @@ type User struct {
     Profile_sidebar_border_color       string
     Profile_image_url_https            string
     Profile_background_image_url_https string
-    
 }
 
 type Tweet struct {
